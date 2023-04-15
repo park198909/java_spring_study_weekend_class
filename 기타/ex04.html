@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>연습!</title>
+    </head>
+    <body>
+        <style>
+            .box {padding: 100px;}
+            #box1{background-color: gray;}
+            #box2{background-color: blue;}
+            #box3{background-color: orange;}
+        </style>
+        <script>
+            window.addEventListener("DOMContentLoaded",function(){
+                const box1 = document.getElementById("box1");
+                const box2 = document.getElementById("box2");
+                const box3 = document.getElementById("box3");
+
+                box1.addEventListener("click",function(){
+                    console.log("box1 클릭!");
+                }, false);
+                box2.addEventListener("click",function(){
+                    console.log("box2 클릭!");
+                }, false);
+                box3.addEventListener("click",function(event){
+                    // console.log(event);
+                    // event.stopPropagation();
+                    // console.log("box3 클릭!");
+
+                    console.log("this: ", this);
+
+                });
+                /**
+                box3.addEventListener("click",function(event){
+                    // console.log(event);
+                    event.stopPropagation();
+                },true);*/
+            });
+        </script>
+        <div class="box" id="box1">box1
+            <div class="box" id="box2">box2
+                <div class="box" id="box3">box3</div>
+            </div>
+        </div>
+    </body>
+</html>

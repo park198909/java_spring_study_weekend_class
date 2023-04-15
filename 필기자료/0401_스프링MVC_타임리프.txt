@@ -1,0 +1,140 @@
+세션, 쿠키, 인터셉터
+1. 쿠키
+- 개인화된(브라우저별) 서비스 제공 기술
+- 서버응답(쿠키저장명령-> Set-Cookie)
+- 브라우저는 쿠키 저장(보안성이 낮다)
+
+매 요청시마다 브라우저가 서버에 전송(요청)
+- 요청 헤더(cookie)
+
+웹
+
+요청 
+
+응답
+  헤더
+    1)응답상태, 응답 바디에 대한 데이터 종류(content_type)
+    2)서버쪽-> 브라우저에게 명령
+      예) Location:주소;
+    3) Set-Cookie : 키=값  
+  바디
+
+생성
+-서버가 응답 헤더(Set-Cookie:키=값;...)
+저장
+-브라우저가 응답 헤더 -> 쿠키저장
+조회
+-매 요청마다 요청 헤더(cookie) 서버에 전송
+
+서블릿 
+  HttpServletRequest request - 요청
+    -Cookie[] getCookies() -> 쿠키등록 메서드
+    
+  HttpServletResponse response - 응답
+    -addCookie -> 쿠키저장 메서드
+    
+JSP : 번역기술
+  HttpServletRequest request
+  HttpServletResponse response
+  PageContext pageContext
+  ServletContext application
+  ServletConfig config
+  JspWriter out
+  HttpSession session
+
+Cookie
+  ->setMaxAge(0) : 쿠키 삭제
+  
+@CookieValue
+  
+
+2.세션
+- 개인화된 서비스 제공 기술
+- 데이터의 저장 위치가 서버(보안성이 높다)
+- 개개인의 브라우저를 구분하기 위한 JSISSIONID가 필요
+
+HttpSession session
+
+HttpServletRequest request
+  : HttpSession getSession()
+ 
+JSP
+  PageContext pageContext
+    : HttpSession getSession()
+  
+  HttpSession session
+  
+속성을 관리하는 JSP내장객체(4가지)
+PageContext pageContext
+HttpServletRequest request
+HttpSession session
+HttpServletContext application
+
+  void setAttribute(String key, Object value): 속성추가
+  Object getAttribute(String key) : 속성조회
+  void removeAttribute(String key) : 속성제거
+  invalidate() : 세선 값 비우기
+-EL식 변수로 접근이 가능
+
+EL식 변수 적용 순서
+pageContext -> request -> session -> application
+
+스프링
+-서블릿,JSP의 내장 객체 -> 스프링 관리 객체 설정
+-의존성 주입을 편하게 할 수 있게 되어 있다...
+-@Autowired, 요청 메서드의 매개변수 자동 주입
+HttpServletRequest
+HttpServletResponse
+HttpSession
+...
+
+비밀번호 설정 기준
+암호화
+  -양방향:암호화 <-> 복호화(AES,ARIA,OpenSSL,...)
+  -단방향:해시(복호화 불가)
+        -고정 해시(md5,sha1,sha256,sha512,...)
+          - 같은 값에 대해서 같은 해시
+        -유동 해시(BCrypt ...)
+          -해시를 생성할때 마다 다른 해시값
+          -별도의 체크하는 알고리즘 확인
+
+@Autowired
+1) 멤버 변수
+2) setter메서드 매개변수
+3) Optional<T>
+4) @Autowired 애노테이션정의 X : 생성자의 매개변수
+
+3. 인터셉터 : 공통기능
+HandlerInterceptor인터페이스
+  boolean preHandle(...)
+    - 컨트롤러 빈을 처리하기 전
+    - false : 컨트롤러 빈을 실행X
+    - true : 컨트롤러 빈을 실행O
+    
+  void postHandle(...)
+    - 컨트롤러 빈을 처리 한 후 ModelAndView 반환 직후 공통기능 수행
+    
+  void afterCompletion(...)
+    - 응답이 완료된 직후에 공통기능 수행
+    
+
+ANT패턴
+/mypage/* -> /mypage 하위파일
+/mypage/** -> /mypage를 포함한 하위경로+하위파일(모든경로)
+/mypage/O?A -> 글자 1개 : O1A,O2A,O3A,O4A 모두 대상지정
+
+    
+@PathVariable - 경로변수
+
+
+날짜 값 변환
+
+
+
+익셉션 처리
+
+스프링 파일 업로드(MultipartFile)
+
+프로필
+
+프로퍼티 파일을 이용한 프로퍼티 설정

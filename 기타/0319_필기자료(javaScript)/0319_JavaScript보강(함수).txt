@@ -1,0 +1,31 @@
+자바스크립트 함수
+함수 객체 -> 실행 -> EC(실행문맥 객체)생성 -> 실행
+
+Global EC
+  변수의 재구성
+    - window객체의 하위 속성
+      window.num0 : 5
+  외부EC의 변수 참조 : null
+  this바인딩(this의 범위지정) : window
+  
+outer 함수 EC(Execution Context)
+  변수의 재구성
+    - 원시타입 변수  
+      num1 : 10
+    - 참조타입 변수(객체)
+      ...
+  외부EC의 변수 참조 : Global EC 변수
+  this바인딩(this의 범위지정) : 함수를 호출한 객체(실행 시점에서 결정된다.) 
+  
+inner 함수 EC(Execution Context)
+  변수의 재구성
+    - 원시타입 변수  
+      num2 : 20
+    - 참조타입 변수(객체)
+      ...
+  외부EC의 변수 참조 : outer EC 변수
+  this바인딩(this의 범위지정) : 함수를 호출한 객체(실행 시점에서 결정된다.)
+  
+반복자 패턴 : 배열 내부의 정보를 순차적으로 꺼내보는 기능   
+Symbol.iterator
+for...of

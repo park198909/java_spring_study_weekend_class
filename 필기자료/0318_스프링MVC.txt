@@ -1,0 +1,119 @@
+스프링 MVC 시작하기
+1. 스프링 MVC를 위한 설정
+M - Model
+	- Service (기능)
+	- DAO(Data Access Object)	- 정보 접속
+	- DTO(Data Transfer Object)	- 정보 전송
+	- Validator ...
+V - View
+	- 처리 결과를 출력(jsp, 타임리프 템플릿)
+C - Controller
+	- 요청과 응답 사이에서 Model 과 View를 중재한다.
+
+서블릿 세팅
+
+MVN레포지터리 사이트 다운로드
+javax.servlet-api
+java.servlet-jsp.api -> jsp-api
+
+spring-webmvc -> 5.3.25version
+	+ spring-context
+
+크롬 검색
+tomcat9 다운로드 -> file -> others -> server -> tomcat9 -> 저장폴더선택
+
+웹 설정
+properties -> project Facets -> Dynamic Web Module체크 -> apply
+properties ->Deployment Assembley -> add -> java build path entry -> maven -> apply
+
+
+****************************************************************************
+웹브라우저 실행요청 -> DispatcherServlet -> 
+
+-> HandlerMapping
+	- 요청을 수행할 수 있는 '*빈'을 탐색하여 반환
+
+*빈의 형태
+	- @Controller 애노테이션 적용 객체
+	- Controller 인터페이스로 구현된 객체
+	- HttpRequestHandler 객체
+	...
+
+-> handlerAdapter
+	- 다양한 종류의 다양한 '빈'의 형태를 통합해 실행
+	- 실행 후 '*컨트롤러 반환값'을 ModelAndView형태로 통합변환
+
+*컨트롤러 반환값 
+	- String 문자열
+	- ModelAndView 객체
+		- 템플릿에서 사용할 데이터
+		- 출력 탬플릿의 경로 정보
+
+-> ViewResolver
+	- ModelAndView의 정보를 토대로 View를 탐색하여 반환
+
+-> 생성된 View를 통해 JSP를 실행하여 응답
+****************************************************************************
+
+
+5. WebMvcConfigurer 인터페이스와 설정
+	- Mvc 설정 항목(default 메서드)
+	- Mvc제어클래스(@Configuration)에서 implement WebMvcConfigurer 적용
+	
+Ant패턴
+	* -> /mypage/* -> /mypage 경로 포함한 하위 파일
+			-> /mypage/index.jsp
+	** -> /mypage/** -> /mypage 경로 포함한 하위 경로(폴더) 및 하위 파일 전부에 해당
+			->/mypage/sub/sub1.jsp
+
+	? -> 문자 1개
+		/my?00	-> /my100, /my200
+
+****************************************************************************
+애노테이션
+@ComponentScan
+	@Component
+	@Service
+	- @Controller	요청 처리 특화
+	| @Configuration	
+	| @Aspect
+	- @Repository
+
+@RequestParam
+
+컨트롤러 빈의
+메서드의 매개변수로 자동 주입
+- 요청 데이터
+- Model 객체
+	- 속성을 추가하고 변경하고, 제거
+	- addAttribute(Object name, Object value)
+- HttpServletRequest
+- HttpServletResponse
+- HttpSession
+- Error errors : Bean Validation, Validator
+
+서블릿 핵심 객체 -> 스프링 관리 객체로 편성
+@Autowired로 간단히 편성가능
+
+- 커맨드 객체 : 요청 데이터를 전달하는 객체
+	- EL식 속성으로 자동 추가
+		(커맨드 클래스명의 첫 글자만 소문자인 속성을 자동 추가)
+		MemberJoin -> memberJoin
+
+****************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

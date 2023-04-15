@@ -1,0 +1,5 @@
+package org.koreait.controllers;
+
+public class MemberSearch {
+
+}

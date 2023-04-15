@@ -1,0 +1,47 @@
+날짜 값 변환
+-@DataTimeFormat
+  - 형식이 다를때
+  - typeMismatch
+
+-@PathVatialble : 경로변수
+
+
+익셉션 처리
+-@ExceptionHandler
+  -> 오류 발생 -> 지정된 템플릿으로 출력
+  자동주입
+  -> 발생한 예외 객체
+  -> HttpServletRequest
+  -> HttpServletResponse
+  -> HttpSession
+  -> Model
+
+- 컨트롤러 공통
+@ControllerAdvice
+
+- Rest 컨트롤러 공통
+@RestControllerAdvice -> @RestController
+
+
+스프링 파일 업로드(MultipartFile)
+
+
+
+
+프로필
+
+
+
+
+프로퍼티 파일
+1. PropertySourcesPlaceholderConfigurer
+
+
+
+
+
+
+
+
+
+

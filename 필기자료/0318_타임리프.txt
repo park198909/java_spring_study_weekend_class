@@ -1,0 +1,30 @@
+타임리프(Thymeleaf) - natural template
+
+타임리프 환경설정
+
+필요 라이브러리(mvn repository)
+spring5 thymeleaf
+thymeleaf java8time
+
+***
+java 1.8version이후 - java.time
+java8time
+***
+
+
+1. 스프링 MVC와 타임리프 연동 설정
+2. 타임리프 기본문법
+1) 타임리프의 주요 식(expression)
+변수식 : ${...} : 변수식(변수,간단한 연산식)
+메시지식 : #{코드}
+링크 식 : @{링크} - 컨택스트 경로를 자동 추가
+선택 변수 식 : *{객체 EL식 속성}
+
+2) 타임리프 식 객체
+
+3) th:text : 텍스트만 출력
+   th:utext : html 인식하여 출력
+4) th:each
+5) th:if, th:unless
+6) th:href
+

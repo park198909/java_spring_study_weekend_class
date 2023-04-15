@@ -1,0 +1,82 @@
+스프링 부트
+전용 개발 툴
+STS(Spring Tool Suit)
+  - Spring initializer
+  - 이클립스 기반
+  
+인텔리J
+  - Spring initializer  : 유료버전
+  - 무료버전 : start.spring.io -> 직접 설정 다운
+  
+1. 개발 환경 구축
+    spring devTool
+      - liveReload : 크롬 확장팩
+
+    servlet 4.0 -> javaee8
+                -> javax.
+                
+    servlet 5.0 -> jakarta ee9
+                -> jakarta.
+                
+    @ComponentScan
+      - @Component
+      - @Service
+      - @Configuration
+      - @Controller
+      - @RestController
+      - @RestControllerAdvice
+      - @Repositary
+      - @Aspect      
+    
+2. lombok
+@Getter -> Getter자동생성
+@Setter -> Setter자동생성
+@ToString -> toString자동생성
+@NoArgsConstructor -> 기본생성자 자동생성
+@AllArgsConstructor -> 모든 멤버변수의 초기화하는 생성자를 자동생성
+
+매개변수
+@RequiredArgsConstructor -> 반드시 초기화가 필요한 변수를 생성자매개변수로 초기화한다.
+  - 기본값이 없는 상수 = private final...
+  - @NonNull -> 이게 적히면 강제 초기화
+@EqualsAndHashcode -> equals(), hashCode() 자동생성
+
+@Data
+    - @Getter, @Setter, @toString
+    - @EqualsAndHashCode
+    - @RequiredArgsConstructor
+    
+@Builder : 빌더 패턴
+          - setter 대체 패턴
+
+@Log 
+  - trace -> debug -> info -> warn -> error -> fatal
+    
+@Sfl4j
+@Sfl4j2
+
+3. RestController - JSON을 다루는 컨트롤러
+    API 
+    
+    @RestController
+      ->응답데이터
+        String, void
+        List<T>
+        T   
+        
+    @JsonFormat : java.time패키지의 날짜형식 변경
+    @JsonIgnore : JSON 변환 제외
+    
+    요청데이터
+      - 스프링기본
+        요청 헤더 content-type : application/x-www-form-urlencoded
+        (일반 양식 데이터 키=값&키=값)
+        
+      - JSON형식 요청 형식
+        요청 헤더 : content-type : application/json
+        ({키:값,키:값})
+        - @RequestBody 커맨드 객체 : JSON요청 데이터를 변환해줌
+              
+4. Spring Data JPA
+
+5. Spring Security

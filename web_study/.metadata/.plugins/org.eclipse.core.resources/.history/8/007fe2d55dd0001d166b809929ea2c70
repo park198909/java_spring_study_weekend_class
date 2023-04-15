@@ -1,0 +1,47 @@
+package org.koreait.controllers;
+
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.koreait.models.member.MemberLoginService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/member/login")
+public class MemberLoginController {
+	
+	private MemberLoginValidator validator;
+	private MemberLoginService service;
+	
+	public MemberLoginController(MemberLoginValidator validator, MemberLoginService service) {
+		this.validator = validator;
+		this.service = service;
+	}
+	
+	@GetMapping
+	public String login(Model model) {
+		
+		MemberLogin memberLogin = new MemberLogin();
+		model.addAttribute("memberLogin", memberLogin);
+		
+		return "member/login";
+	}
+	
+	@PostMapping
+	public String loginPs(@Valid MemberLogin memberLogin, Errors errors) { 
+		// MemberLogin -> memberLogin 
+		validator.validate(memberLogin, errors);
+		
+		if (errors.hasErrors()) {
+			return "member/login";
+		}
+		
+		
+		return "redirect:/";  // HttpServletResponse sendRedirect
+	}
+}

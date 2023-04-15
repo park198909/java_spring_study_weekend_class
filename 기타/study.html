@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>연습!</title>
+    </head>
+    <body>
+        <script>
+            window.addEventListener("DOMContentLoaded",function(){
+                const button = document.getElementById("button");
+
+                button.addEventListener("click",function(){
+                    alert("클릭1");
+                });
+                
+                button.addEventListener("click",function(){
+                    alert("클릭2");
+                });
+                /**
+                button.onclick = function(){
+                    alert("클릭1");
+                };
+
+                button.onclick = function(){
+                    alert("클릭2");
+                };
+                */
+            });
+        </script>
+        <button type="button" id="button">클릭!</button>
+    </body>
+</html>

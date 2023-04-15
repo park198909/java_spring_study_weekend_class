@@ -1,0 +1,208 @@
+자바스크립트 코어
+  - 내장 생성자
+    - Object, String, Array, Function ...
+  - 내장 객체
+    - Math, JSON ...
+
+****************************************************
+웹 브라우저에서 자바스크립트가 하는 일
+(1) 웹 페이지의 Document 객체 제어(HTML 요소와 CSS 스타일 작업)
+  DOM 이라는 API를 활용합니다.
+(2) 웹 페이지의 Window 객체 제어 및 브라우저 제어
+  웹 브라우저에 내장된 다양한 객체를 활용하며, 대표적인 객체로 Location, Navigator 등이 있습니다.
+(3) 웹 페이지에서 발생하는 이벤트 처리
+(4) Http를 이용한 통신 제어
+  XMLHttpRequest 객체를 활용합니다.
+
+
+웹 브라우저에서 자바스크립트 실행 
+CSS와 렌더링
+****************************************************
+
+호스트(실행주체) 객체 - 런타임마다 다르게 구성된 객체
+1. 웹브라우저 객체
+window : 최상위 객체
+Location : 웹브라우저의 주소 창과 관련된 기능 + 정보
+History : 방문기록 관련 기능 + 속성
+ 
+Screen : 화면 관련 기능 + 속성
+Navigator : 
+  
+Document : HTML문서와 관련된 기능 + 속성
+
+
+Window객체
+  1. 주요 프로퍼티
+    console
+      .log : 값을 확인
+      .dir : 객체의 속성을 확인
+      .error : 에러객체를 확인 -> 붉은 글씨
+      .trace() : 정의된 위치까지 도달하기 위해서 거친 스크립트, 함수들의 정보 
+      .timeStart()
+      .timeEnd()
+      
+    opener : 윈도우창을 열게 한 대상을 가리키는 명령  
+      
+    innerWidth : 보이는 창의 너비(스크롤바 사이즈 제외)
+    innerHeight : 보이는 창의 높이(스크롤바 사이즈 제외)
+    
+    outerWidth : 전체 창의 너비(스크롤바+)
+    outerHeight : 전체 창의 높이(스크롤바+)
+    
+    pageXOffset : X축으로 스크롤바를 움직인 정도(px단위)
+    pageYOffset : Y축으로 스크롤바를 움직인 정도(px단위)
+    
+    
+  2. 주요 메서드
+    alert("메세지") : 알림 팝업 
+    prompt(메세지, 기본값) : 입력창이 존재하는 팝업
+    confirm() : 확인 - true반환, 취소 - false반환 이 있는 팝업
+
+    setTimeout : 지연실행        - 작업등록번호 반환
+                 (이벤트,비동기)
+    setInterval : 지연 반복실행   - 작업등록번호 반환
+                 (이벤트,비동기)
+                 
+    clearTimeout(작업등록번호);   : 지연실행 취소
+    clearInterval(작업등록번호);  : 지연반복 실행 취소
+    ***자바스크립트는 싱글쓰레드(제어가능한 쓰레드가1개)이므로 비동기 처리를 권장한다***
+    ***단, 순서가 필수적인 기능을 위한 조치가 필요하다.(회원가입과 로그인 등)***
+    
+    
+Location객체 - window.location
+  1. 주요 프로퍼티
+    hash : 검색 키워드(id값을 기준으로 함)
+
+
+  2. 주요 메서드
+    URL이동
+      assign("URL") : 방문기록을 남긴다.
+        location.href="주소";
+      replace("URL") : 방문기록을 남기지 않는다.
+    reload : 새로고침
+  
+  
+History객체 - 방문기록과 관련된 객체
+  1. 주요 프로퍼티
+    length : 방문 기록된 갯수
+    scrollRestoration : 
+      auto : 스크롤 위치 기억(페이지 이동 후 돌아가기 할 경우)
+      manual : 스크롤 위치 기억 안함
+
+  2. 주요 메서드
+    back() : 방문기록 뒤로 한단계 이동
+    forward() : 방문기록 앞으로 한단계 이동
+    go(숫자) : 음수 -> 숫자만큼 단계를 뒤로 이동
+             양수 -> 숫자만큼 단계를 앞으로 이동
+    pushState
+    replaceState
+
+
+Screen 객체
+  1. 주요 프로퍼티
+
+  2. 주요 메서드
+ 
+    
+Navigator 객체 - 브라우저의 환경
+  1. 주요 프로퍼티
+    language : 언어정보
+    platform : 브라우저의 환경정보
+    userAgent : 브라우저를 구분할 수 있는 코드
+    online : 인터넷 연결여부(true, false)
+    geolocation : GPS정보를 반환(위도,경도)
+  2. 주요 메서드
+
+
+Document 객체 - HTML을 다루는 객체
+  1. 주요 프로퍼티
+    doucument - html태그와 동일
+      .head - head태그와 동일
+      .body - body태그와 동일
+      .form - id,name태그와 동일(document객체표기 제외 가능)
+        양식에 있는 input, textarea, select ... -> .name속성으로 접근가능
+  2. 주요 매서드
+    .getElementById("아이디명") : 1개만 선택(id)
+    .getElementsByClassName("클래스명") : 여러개 선택(class)
+    .getElementsByTagName("태그명") : 여러개 선택(tag)
+    .getElementsByName("name값") : 여러개 선택(name)
+    .querySelector("CSS 선택자") : 1개만 선택(CSS 선택자)
+    .querySelectorAll("CSS 선택자") :여러개 선택(CSS 선택자)
+    
+    상대적인 위치에 따른 선택
+    선택자객체.parentElement : 선택자객체의 부모요소 선택
+    선택자객체.children : 선택자객체의 자식요소 선택(여러개 선택 가능)
+    선택자객체.firstElementChild : 선택자객체의 첫번째 자식요소 선택
+    선택자객체.lastElementChild : 선택자객체의 마지막 자식요소 선택
+    선택자객체.previousElementSibling : 선택자객체의 앞의형제(왼쪽) 선택
+    
+    속성관련 메서드
+    .setAttribute("속성명","값"); // 없으면 추가, 있으면 수정
+    .getAttribute("속성명")      // 속성명 조회
+    .removeAttribute("속성명")   // 속성명 제거
+    
+    사용빈도가 높은 기능 연관 속성은 doucument 객체 하위 속성으로 바로 접근이 가능
+    예) type,name,id,href,src,target,action,value...
+       -> 선택자객체.id = 값; 으로 바로 접근하여 수정가능
+       
+    정보성 속성 객체
+    doucument.dateset
+
+    클래스 속성을 다루는 객체
+    doucument.classList
+      .add("속성명")
+      .remove("속성명")
+      .contains("속성명") : 존재여부 체크
+      .toggle("속성명") : 클래스명이 있으면 제거, 없으면 추가
+ 
+***
+HTML 태그는 브라우저가 인식가능한 doucument의 하위 객체로 변환된다.(DOM)
+
+DOMContentLoaded 이벤트
+-> 객체변환에는 시간이 걸리므로 window.addEventListner로 객체변환이 완료되면
+작동하도록 설정한다. DOM트리 = 검색을 위해 최적화한 이진트리구조
+예) window.addEventListner("DOMContentLoaded",이벤트함수);
+
+<script>
+  - async : 비동기 처리(백그라운드에서 실행하여 무거운 작업을 뒤로 미루는 기능)
+  - defer : DOMContentLoaded 이벤트 이후 실행
+</script>
+예) <script defer src="script.js">
+
+*** 
+***
+서버가 응답한 HTML텍스트 데이터 -> Document객체변환(브라우저) -> DOMContentLoaded 이벤트 -> DOM트리 -> 이미지,비디오,외부 스크립트, 외부 CSS로드 -> load 이벤트 
+***
+
+이벤트 처리
+1. 이벤트 처리기 등록하는 방법
+document객체 속성으로 등록하는 방법
+  on이벤트명 = 이벤트 핸들러 함수;
+
+2. 이벤트 리스너를 등록하고 삭제하는 방법
+document
+  addEventListner("이벤트명","이벤트 핸들러 함수", useCapture)
+  useCapture - 기본값 false : 버블링 단계에서 이벤트전파
+             - true : 캡쳐링 단계에서 이벤트전파
+  비동기로 작동하여 이벤트루프가 기능이 겹치거나 수정되는 것을 방지
+  
+이벤트 객체
+  1. Event.stopPropagation() : 이벤트 전파 방지
+  2. Event.preventDefault() : 기본기능 차단
+  3. Event
+          .target : 이벤트가 발생한 요소
+          .currentTarget : 이벤트가 바인딩되어있는 요소(이벤트 핸들러에 있는 this)
+마우스 이벤트
+
+키보드 이벤트
+
+기타 이벤트
+
+이벤트 전파
+1. 이벤트의 단계
+
+  캡쳐링 단계 : 타겟을 찾아가는 단계 
+  타겟 단계 : 타겟을 찾아 이벤트를 실행하는 단계 
+  버블링 단계 : 되돌아가는 단계(이벤트가 전파됨(useCapture))
+  
+이벤트 리스너 안의 this

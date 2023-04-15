@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<body>
+		[[${param.num1 + '/' + param.num2}]]
+		<table border='1'>
+			<thead>
+				<tr>
+					<th>순번</th>
+					<th>아이디</th>
+					<th>회원명</th>
+					<th>이메일</th>
+					<th>휴대전화</th>
+					<th>가입일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="member, status :  ${members}" th:object="${member}">	
+					<td>
+						<th:block th:text="${status.count}"></th:block>
+						<th:block th:if="${status.first}" >(첫번째)</th:block>
+						<th:block th:if="${status.last}">(마지막)</th:block>
+						<th:block th:if="${status.odd}">(홀수)</th:block>
+						<th:block th:unless="${status.odd}">(짝수)</th:block>
+					</td>
+					<td th:text="*{@cUtil.toConvert(userId)}"></td>
+					<td th:text="*{userNm}"></td>
+					<td th:text="*{email}"></td>
+					<td th:text="*{mobile}"></td>
+					<td th:text="*{#temporals.format(regDt, 'yyyy.MM.dd HH:mm')}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>
