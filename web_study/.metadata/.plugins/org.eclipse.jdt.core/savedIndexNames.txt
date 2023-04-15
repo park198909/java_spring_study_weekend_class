@@ -13,16 +13,16 @@ INDEX VERSION 1.131+C:\Users\Administrator\Desktop\박영근\web_study\.metadata\.p
 4220676836.index
 1377022111.index
 2532868025.index
+2461441563.index
 642000736.index
 4070020521.index
 2432723850.index
-2894457770.index
 2866502811.index
+2894457770.index
 494853648.index
 4284003404.index
 855985683.index
 1650976604.index
-2461441563.index
 1594823160.index
 4075264679.index
 4127762471.index
@@ -48,7 +48,6 @@ INDEX VERSION 1.131+C:\Users\Administrator\Desktop\박영근\web_study\.metadata\.p
 3588515615.index
 781675358.index
 2595330001.index
-2957610425.index
 1749998700.index
 2429613240.index
 3391529300.index
