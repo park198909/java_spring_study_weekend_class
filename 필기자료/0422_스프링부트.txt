@@ -1,0 +1,159 @@
+스프링 부트
+
+1. JPA 동작방식
+JPA(Java Persistence API : 자바 영속성 API)
+API(Application Programing Interface)
+javax.persistence
+jakarta.persistence
+    - hibernate EntityManager : 실제 구현체
+    
+Spring boot stater data jpa 설정 필요
+    # Spring Data JPA 설정
+    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+    spring.datasource.url=jdbc:mysql://localhost:3306/springboard
+    spring.datasource.username=springboard
+    spring.datasource.password=aA!123456
+    # 실행되는 쿼리 콘솔 출력
+    spring.jpa.properties.hibernate.show_sql=true
+    # 콘솔 창에 출력되는 쿼리를 가독성 좋게 포맷팅
+    spring.jpa.properties.hibernate.format_sql=true
+    # 쿼리에 물음표로 출력되는 바인드 파라미터 출력
+    logging.level.org.hibernate.type.descriptor.sql=trace
+    spring.jpa.hibernate.ddl-auto=create
+    spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+    #ORM이 데이터베이스의 종류에 따라 대응할수 있게 설정
+    spring.jpa.hibernate.ddl-auto=create
+    spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+    EntityManagerFactory
+        
+- EntityManager를 생산하는 기능
+
+EntityManager
+- database와 자바 객체를 연결하여 자동으로 테이블을 생성하는 기능(ORM)
+영속성 컨택스트(Persistence Context)
+- Entity 상태 감지 -> flush() -> 쿼리 실행
+
+new : 비영속 상태
+persist(Entity) : Entity를 영속성 컨택스트에 넣어준다.
+                      - Entity 상태를 감지할 수 있게 된다.
+                      
+remove(Entity) : Entity를 영속성 컨택스트에서 제거상태로 변환                     
+                      - flush() -> DELETE쿼리 실행
+                      
+detach(Entity) : Entity를 영속성 컨택스트에서 분리한다                 
+                      - Entity 상태를 감지하지 않는다.
+                      - 쿼리를 반영하지 않는다.
+
+merge(Entity) : 분리된 Entity를 영속성 컨택스트에 추가한다.
+                      - Entity 상태를 감지할 수 있게 된다.
+                      - 쿼리를 반영한다.
+                      
+find(Entity Class class, 기본키) : 엔티티 객체를 반환,
+                                        없으면 DB에서 조회(SELECT쿼리실행)
+                                        항상  flush() 자동 적용 후 호출됨
+
+spring.jpa.hibernate.ddl-auto=
+                                        create :    모든 테이블 drop -> 새로 생성
+                                                      개발 초기
+                                        update :   테이블 drop X -> 변경사항 반영
+                                                      개발 중기
+                                        validate :  엔티티의 변겨사항 감지
+                                                      변경사항 -> 예외발생
+                                                      실서버
+                                        none :      아무것도 하지 않음
+                                                      실서버
+
+@GeneratedValue : 자동등감번호 적용 에노테이션
+    strategy
+        generationType
+            .AUTO
+            .IDENTITY
+            .SEQUENCE
+            .TABLE
+@LOB : 여러줄 텍스트 저장
+    MySQL - LONGTEXT
+    Oracle - CLOB
+    
+@Enumerated : Enum클래스를 인식시키는 에노테이션
+    EnumType.ORDINAL : 사용 X -> 상수 위치가 바뀌면 문제 발생
+    EnumType.STRING : 명칭 그대로 사용
+    
+@Column : 컬럼의 속성, 제약조건 상세하게 설정하는 에노테이션
+    name : 필드의 이름 변경
+    unique(DDL) : UNIQUE 제약조건 지정
+    insertable
+    updatable
+    length
+
+-----------------------------------------------------------------------------------------------
+3. Repository 설계하기
+    DAO클래스를 대신하는 인터페이스
+    
+    JpaRepository<대상클래스, 기본키의 자료형> 인터페이스 상속
+    - 구현체를 프록시 형태로 자동생성해준다.
+    - T save(T t) : persist() : 영속성 추가기능
+                                    - 반환값 : 영속상태의 엔티티
+    - T saveAndFlush(T t) : save() + flush()                                
+    - void delete(T t) : remove() : 영속상태를 제거상태로 변환
+    - flush()
+    - long count() : 전체 갯수
+    
+    find 형태의 메서드 -> 조회 -> 영속 상태
+    - Optional<T> findById()
+    - List<T> findAll() : 전체조회
+                 findAll(Sort sort) : 정렬 기능 추가
+                    - Sort.Order.asc()
+                    - Sort.Order.desc()
+                 
+                Spring Data API
+    
+    get 형태의 메서드 -> 조회 -> 비영속 상태
+    - ...getBy... 
+    
+Lombok
+    @RequiredArgsConstructor
+        - 하기 멤버변수 초기화 생성자
+        - final 멤버변수, 초기값X
+    @Log
+        log
+            .error
+            .warning
+            .info
+            .debug
+            .trace    
+
+Pageable 인터페이스
+    MySQL - LIMIT 0,10...
+    Oracle - ROWNUM
+    PageRequest - Pageable구현체
+        of(int page, int size, [Sort sort]);
+
+Page 인터페이스
+    페이징을 위한 편의 메서드를 가지고 있다.
+    
+-----------------------------------------------------------------------------------------------
+4. 쿼리 메서드
+    WHERE조건을 편하게 메서드 패턴으로 정의
+    -> 구현체 자동 생성
+    
+    
+-----------------------------------------------------------------------------------------------
+10. Adjusting을 이용한 엔티티 공통 속성화
+    - 공통 컬럼을 공유
+    
+추상클래스로 생성
+@MappedSuperClass 에노테이션 적용
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,0 @@
-package org.koreait.controllers.files;
-
-public class FileUploadController {
-
-}

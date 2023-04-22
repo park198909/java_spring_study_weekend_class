@@ -20,6 +20,7 @@
 	</section>
 	<section name="MavenProjectWizardLocationPage">
 		<list key="location">
+			<item value="C:\Users\Administrator\Desktop\박영근\web_study\week3_01\src\main\resources\application.properties"/>
 			<item value="C:\Users\Administrator\Desktop\박영근\web_study\week04\src\main\java\org\koreait\exam01\AppCtx.java"/>
 		</list>
 		<list key="projectNameTemplate">
