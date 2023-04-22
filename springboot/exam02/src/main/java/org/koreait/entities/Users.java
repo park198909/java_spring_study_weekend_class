@@ -7,6 +7,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.koreait.commons.constants.UserType;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data   // @Getter @Setter @ToString @ EqualsAndHahCode @RequiredArgConstructor
 @Entity
@@ -43,4 +45,6 @@ public class Users extends BaseEntity {
     @Column(length = 20, nullable = false)
     private UserType type = UserType.USER;
 
+    @OneToMany(mappedBy = "user")   // 연관관계의 주인 명시 PostData::user
+    private List<PostData> postDatas = new ArrayList<>();
 }

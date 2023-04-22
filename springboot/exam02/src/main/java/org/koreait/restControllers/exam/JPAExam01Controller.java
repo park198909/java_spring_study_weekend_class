@@ -2,6 +2,7 @@ package org.koreait.restControllers.exam;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.koreait.entities.PostData;
 import org.koreait.entities.Users;
 import org.koreait.repositories.PostDataRepository;
 import org.koreait.repositories.UsersRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Log
@@ -88,5 +90,81 @@ public class JPAExam01Controller {
     public void ex05() {
         Users user = usersRepository.findByUserId("user2");
         log.info(user.toString());
+    }
+
+    @GetMapping("/ex06")
+    public void ex06() {
+        Users user = usersRepository.findByUserIdAndUserNm("user2","사용자2");
+        log.info(user.toString());
+
+        List<Users> users = usersRepository.findByUserIdOrUserId("user2","user3");
+    }
+
+    @GetMapping("/ex07")
+    public void ex07() {
+        List<String> userIds = Arrays.asList("user2","user3");
+//        List<Users> users = usersRepository.findByUserIdIn(userIds);
+//        List<Users> users = usersRepository.findByUserIdInOrderByRegDtDesc(userIds);
+//        List<Users> users = usersRepository.findByUserNmContaining("용");
+
+//        Pageable pageable = PageRequest.of(2,3,Sort.by(desc("regDt")));
+//        List<Users> users = usersRepository.findByUserIdContaining("ser",pageable);
+        /**
+        List<Users> users = usersRepository.findUsers("용");
+         */
+        List<Users> users = usersRepository.findUsers2("용");
+        for(Users user : users) {
+            log.info(user.toString());
+        }
+    }
+
+    @GetMapping("/ex08")
+    public void ex08() {
+        Users user = new Users();
+        user.setUserId("user01");
+        user.setUserPw("123456");
+        user.setUserNm("사용자01");
+        user.setEmail("user01@test.org");
+        user.setMobile("01000000000");
+
+        user = usersRepository.saveAndFlush(user);
+
+        PostData postData = new PostData();
+        postData.setSuject("제목1");
+        postData.setContent("내용1");
+        postData.setUser(user);
+
+        postDataRepository.saveAndFlush(postData);
+    }
+
+    @GetMapping("/ex09")
+    public void ex09() {
+        PostData postData = postDataRepository.findById(1L).orElse(null);
+        Users user = postData.getUser();
+        log.info(postData.toString());
+    }
+
+    @GetMapping("/ex10")
+    public void ex10() {
+        Users user = usersRepository.findById(1L).orElse(null);
+        List<PostData> datas = new ArrayList<>();
+        for(int i = 2; i <= 10; i++) {      // 게시글 다량 추가
+            PostData postData = new PostData();
+            postData.setSuject("제목"+i);
+            postData.setContent("내용"+i);
+            postData.setUser(user);
+            datas.add(postData);
+        }
+
+        postDataRepository.saveAllAndFlush(datas);  // 게시글 적용
+    }
+
+    @GetMapping("/ex11")
+    public void ex11() {
+        Users user = usersRepository.findById(1L).orElse(null);
+        List<PostData> datas = user.getPostDatas();
+        for(PostData data : datas) {
+            log.info(data.toString());  // user
+        }
     }
 }
