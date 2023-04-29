@@ -25,8 +25,7 @@ Spring boot stater data jpa 설정 필요
     spring.jpa.hibernate.ddl-auto=create
     spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
     EntityManagerFactory
-        
-- EntityManager를 생산하는 기능
+        - EntityManager를 생산하는 기능
 
 EntityManager
 - database와 자바 객체를 연결하여 자동으로 테이블을 생성하는 기능(ORM)
@@ -216,11 +215,6 @@ JPQL(Java Persistence Query Language)
 
     @JoinColumn(name="외래키명")
         외래키명을 변경
-
-
-
-
-
 
 
 
