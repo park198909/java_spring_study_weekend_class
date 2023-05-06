@@ -1,0 +1,55 @@
+스프링 부트
+
+로그인한 회원 데이터 조회
+1. 요청 메서드에 매개변수 주입
+    - Principal principal
+        - String getName() : 로그인한 회원 아이디
+    - @AuthenticationPrincipal UserDetails 구현클래스 객체
+
+2. 독립적으로 회원 정보 조회
+    SecurityContextHolder
+        .getContext()
+        .authentication()
+        .getPrincipal()
+
+Object principal = SecurityContextHolder.getContext.authentication().getPrincipal();
+    - principal 구현 클래스
+        - String : 미로그인 anoymousUser 문자열
+        - UserDetails 구현클래스 : 로그인
+        
+Spring Data JPA + Spring Security : 수정자
+    - 데이터 추가 사용자, 데이터 수정 사용자 기록 자동화
+    - Auditor
+    - AwareAuditor 인터페이스 구현체 -> 스프링 관리 객체(Bean)
+    
+Thymeleaf + Spring Security
+    - xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    - sec:authorize="isAuthenticated()" : 로그인 여부
+    - sec:authorize="isAnonnymous()" : 미로그인
+    - sec:authorize="hasAuthority('권한문구')"
+                         "hasAnyAuthority('권한문구')
+
+
+
+                         
+Spring WebMvc
+Spring Data
+Spring Security
+Spring Message
+Spring Batch....                    
+
+
+파일 업로드 구현하기
+
+POST - contentType : application/x-www-form-urlencoded
+
+파일 content-type -> multipart
+        -> form enctype="multipart/form-data"
+
+MultipartFile
+
+    - 동일한 파일명 -> 중복되지 않는 명칭으로 변경
+    - 파일 다운로드 시 원래 파일명으로 다운로드
+    
+    - 파일 업로드 전에 파일 정보 기록
+    - 파일 업로드 성공여부 - 실패한 파일을 삭제하기 위해

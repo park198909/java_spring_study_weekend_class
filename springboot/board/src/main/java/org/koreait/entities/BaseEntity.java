@@ -23,5 +23,4 @@ public abstract class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(insertable = false)
     private LocalDateTime modDt;
-
 }

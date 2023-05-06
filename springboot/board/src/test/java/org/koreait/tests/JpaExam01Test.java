@@ -3,6 +3,7 @@ package org.koreait.tests;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,9 +22,10 @@ import java.util.List;
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
 @Transactional
-public class JpaExam01Test {
+public class JPAExam01Test {
     @Autowired
     private UsersRepository usersRepository;
+
     @Autowired
     private BoardDataRepository boardDataRepository;
 
@@ -48,27 +50,28 @@ public class JpaExam01Test {
                 .userPw("123456")
                 .email("user01@test.org")
                 .mobile("01000000000")
-                .address(address)
+               // .address(address)
                 .build();
-        user = usersRepository.saveAndFlush(user);  // 영속성 추가 및 상태변화 감지
+
+        user = usersRepository.saveAndFlush(user);
 
         List<BoardData> items = new ArrayList<>();
-        for(int i=1; i<=10; i++) {
+        for (int i = 1; i <= 10; i++) {
             BoardData item = BoardData.builder()
                     .boardId("notice")
-                    .subject("제목"+i)
-                    .content("내용"+i)
+                    .subject("제목" + i)
+                    .content("내용" + i)
                     .user(user)
                     .build();
             items.add(item);
         }
 
-        items = boardDataRepository.saveAllAndFlush(items);
-        for(BoardData item : items) {
-            em.detach(item);
-        }
+       items = boardDataRepository.saveAllAndFlush(items);
+       for(BoardData item : items) {
+          em.detach(item);
+       }
 
-        em.detach(user);
+       em.detach(user);
     }
 
     @Test
@@ -77,38 +80,40 @@ public class JpaExam01Test {
         BoardData data = boardDataRepository.findById(1L).orElse(null);
         Users user = data.getUser();
         String userId = user.getUserId();
-        System.out.println("userId="+userId);
-//        System.out.println(data);
-//        Users user = data.getUser();
-//        System.out.println(user);
+        System.out.println("userId=" + userId);
+        //System.out.println(data);
+        //Users user = data.getUser();
+        //System.out.println(user);
     }
-
+    /**
     @Test
     @DisplayName("관계 매핑 연습2")
     void ex02() {
         Users user = usersRepository.findById(1L).orElse(null);
         List<BoardData> items = user.getBoardDatas();
-        for(BoardData item : items) {
+        for (BoardData item : items) {
             System.out.println(item);
         }
     }
+    */
 
     @Test
     @DisplayName("관계 매핑 연습3")
-    void ex03() {   // N+1문제
+    void ex03() {
         List<BoardData> items = boardDataRepository.findByBoardId("notice");
 
         for(BoardData item : items) {
             Users user = item.getUser();
             String userId = user.getUserId();
-            System.out.printf("userId=%s%n",userId);
+            System.out.printf("userId=%s%n", userId);
         }
+
     }
 
     @Test
     @DisplayName("관계 매핑 연습4")
     void ex04() {
-        List<BoardData> items = boardDataRepository.getBoardDatas("notice");    // 관계데이터 조회
+        List<BoardData> items = boardDataRepository.getBoardDatas("notice");
     }
 
     @Test
@@ -126,14 +131,15 @@ public class JpaExam01Test {
             System.out.println(item);
         }
     }
-
+    /**
     @Test
     @DisplayName("관계 매핑 연습6")
     void ex06() {
         Users user = usersRepository.findById(1L).orElse(null);
         Address address = user.getAddress();
-        System.out.printf("addr1=%s, addr2=%s%n",address.getAddr1(),address.getAddr2());
+        System.out.printf("addr1=%s, addr2=%s%n", address.getAddr1(), address.getAddr2());
     }
+    */
 
     @Test
     @DisplayName("관계 매핑 연습7")
@@ -146,13 +152,23 @@ public class JpaExam01Test {
        address = addressRepository.saveAndFlush(address);
 
        Users user = usersRepository.findById(1L).orElse(null);
-       user.setAddress(address);
+      // user.setAddress(address);
        usersRepository.flush();
 
-//       em.detach(address);
-//       System.out.println(address);
-       address=addressRepository.findById(address.getId()).orElse(null);
-       address.getUser().getUserNm();
-       System.out.println(address);
+       //em.detach(address);
+        //System.out.println(address);
+        address = addressRepository.findById(address.getId()).orElse(null);
+       // address.getUser().getUserNm();
+        System.out.println(address);
+
+    }
+
+    @Test
+    @DisplayName("관계 매핑 연습8")
+    void ex08() {
+        Users user = usersRepository.findById(1L).orElse(null);
+
+        usersRepository.delete(user);
+        usersRepository.flush();
     }
 }

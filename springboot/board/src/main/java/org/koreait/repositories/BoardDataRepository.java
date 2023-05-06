@@ -8,8 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BoardDataRepository extends JpaRepository<BoardData, Long>,
-        QuerydslPredicateExecutor<BoardData> {
+public interface BoardDataRepository extends JpaRepository<BoardData, Long>, QuerydslPredicateExecutor<BoardData> {
     List<BoardData> findByBoardId(String boardId);
 
     @Query("SELECT b FROM BoardData b LEFT JOIN FETCH b.user WHERE b.boardId=:id")
